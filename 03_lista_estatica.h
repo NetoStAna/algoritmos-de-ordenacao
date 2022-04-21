@@ -23,4 +23,5 @@ public:
 
     void bubble_sort();
     void insertion_sort();
+    void selection_sort();
 };

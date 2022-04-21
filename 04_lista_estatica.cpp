@@ -145,3 +145,27 @@ void Lista::insertion_sort()
         this->lista[j] = auxiliar;
     }
 }
+void Lista::selection_sort()
+{
+    int menor_id;
+    Individuo auxiliar;
+
+    for (int i = 0; i < this->quantidade_max - 1; i++)
+    {
+        menor_id = i;
+
+        for (int j = i + 1; j < this->quantidade_max; j++)
+        {
+            if (this->lista[j].get_id() < this->lista[menor_id].get_id())
+            {
+                menor_id = j;
+            }
+        }
+        if (i != menor_id)
+        {
+            auxiliar = this->lista[i];
+            this->lista[i] = this->lista[menor_id];
+            this->lista[menor_id] = auxiliar;
+        }
+    }
+}

@@ -116,6 +116,58 @@ A cada etapa do laço aninhado, o elemento da posição `j` do `vetor` recebe o 
 
 
 
+### Selection Sort
+
+O método utiliza uma variável `int`: menor_id, para verificar a posição do `Individuo` com menor `id` no vetor, uma variável `Individuo`: auxiliar, para auxiliar nas trocas necessárias da ordenação, assim como um laço `for` que percorre o `vetor` do início até a última posição.
+
+```cpp
+void Lista::selection_sort()
+{
+    int menor_id;
+    Individuo auxiliar;
+
+    for (int i = 0; i < this->quantidade_max - 1; i++)
+    {
+```
+
+A cada etapa do laço, a variável `menor_id` recebe o valor de `i`, em seguida é utilizado outro laço `for` aninhado que percorre o `vetor` da posição seguinte de `i` até o final.
+
+```cpp
+        menor_id = i;
+
+        for (int j = i + 1; j < this->quantidade_max; j++)
+        {
+```
+
+A cada etapa do laço aninhado o valor do `id` do `Individuo` na posição `j` é comparado ao valor do `id` do `Individuo` na posição `menor_id`. Caso o primeiro seja menor que o segundo, a variável `menor_id` recebe o valor de `j`, desta forma ao fim do laço aninhado a variável `menor_id` terá a posição do `Individuo` com o menor `id` no `vetor`.
+
+```cpp
+            if (this->lista[j].get_id() < this->lista[menor_id].get_id())
+            {
+                menor_id = j;
+            }
+```
+
+Por fim, é verificada a diferença entre o valor da variável `i` e o valor da variável `menor_id`, caso estes sejam diferentes, a variável `auxiliar` recebe o `Individuo` da posição `i` do `vetor`, a posição `i` do `vetor` recebe o `Individuo` da posição `menor_id` e a posição `menor_id` recebe o `Individuo` da variável `auxiliar`. Caso contrário, o primeiro laço `for` continua normalmente.
+
+```cpp
+        }
+        if (i != menor_id)
+        {
+            auxiliar = this->lista[i];
+            this->lista[i] = this->lista[menor_id];
+            this->lista[menor_id] = auxiliar;
+        }
+    }
+}
+```
+
+> Melhor Caso: O<sub>(n²)</sub>
+>
+> Pior Caso: O<sub>(n²)</sub>
+
+
+
 ## Referência
 
 Os algoritmos apresentados nesse repositório partem de estudos iniciados no curso de [ordenação](https://www.youtube.com/playlist?list=PL8iN9FQ7_jt6VF821P5sPbg4plqpWKn0x) do Dr. André Backes no canal [Programação Descomplicada Linguagem C](https://www.youtube.com/user/progdescomplicada) no YouTube.
