@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-    int menu, id, idade, quantidade_max;
+    int menu, ord, id, idade, quantidade_max;
     float peso, altura;
     string nome;
 
@@ -54,11 +54,26 @@ int main()
         }
     } while (menu == 1);
 
+    cout << "Digite 1 para fazer a ordenação bubble sort!\n";
+    cout << "Digite qualquer outro número inteiro para fazer a ordenação insertion sort!\n";
+    cin >> ord;
+
     cout << "Lista antes da ordenação:\n";
     lista_individuos.imprimir();
 
-    lista_individuos.bubble_sort();
+    if (ord == 1)
+    {
+        lista_individuos.bubble_sort();
+    }
+    else
+    {
+        lista_individuos.insertion_sort();
+    }
 
     cout << "Lista após ordenação:\n";
     lista_individuos.imprimir();
+
+    cout << "Fim do algoritmo!\n";
+
+    return 0;
 }

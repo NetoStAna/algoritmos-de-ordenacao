@@ -22,4 +22,5 @@ public:
     void imprimir();
 
     void bubble_sort();
+    void insertion_sort();
 };

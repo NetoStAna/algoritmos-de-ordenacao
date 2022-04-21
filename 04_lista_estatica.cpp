@@ -110,7 +110,7 @@ void Lista::imprimir()
 void Lista::bubble_sort()
 {
     int continuar, fim = this->quantidade_max;
-    Individuo aux;
+    Individuo auxiliar;
 
     do
     {
@@ -120,12 +120,28 @@ void Lista::bubble_sort()
         {
             if (this->lista[i].get_id() > this->lista[i + 1].get_id())
             {
-                aux = this->lista[i];
+                auxiliar = this->lista[i];
                 this->lista[i] = this->lista[i + 1];
-                this->lista[i + 1] = aux;
+                this->lista[i + 1] = auxiliar;
                 continuar = i;
             }
         }
         fim--;
     } while (continuar != 0);
+}
+void Lista::insertion_sort()
+{
+    int j;
+    Individuo auxiliar;
+
+    for (int i = 1; i < this->quantidade_max; i++)
+    {
+        auxiliar = this->lista[i];
+
+        for (j = i; j > 0 && auxiliar.get_id() < this->lista[j - 1].get_id(); j--)
+        {
+            this->lista[j] = this->lista[j - 1];
+        }
+        this->lista[j] = auxiliar;
+    }
 }

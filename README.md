@@ -29,13 +29,13 @@ Todos os algoritmos ordenam o `vetor` com objetos do tipo `Individuo`, através 
 
 ### Bubble Sort
 
-O método utiliza uma variável `int`: continuar, para verificar a necessidade de continuar a ordenação, uma variável `int`: fim, inicializada com a quantidade de itens no `vetor`, um `Individuo`: aux, para auxiliar nas trocas necessárias pela ordenação, assim como um loop `do, while`, que segue enquanto o valor da variável `continuar` for diferente de `0`.
+O método utiliza uma variável `int`: continuar, para verificar a necessidade de continuar a ordenação, uma variável `int`: fim, inicializada com a quantidade de itens no `vetor`, um `Individuo`: auxiliar, para auxiliar nas trocas necessárias pela ordenação, assim como um loop `do, while`, que segue enquanto o valor da variável `continuar` for diferente de `0`.
 
 ```cpp
 void Lista::bubble_sort()
 {
     int continuar, fim = this->quantidade_max;
-    Individuo aux;
+    Individuo auxiliar;
 
     do
     {
@@ -50,14 +50,14 @@ A cada etapa do loop a variável `continuar` recebe o valor `0` e é utilizado u
         {
 ```
 
-A cada etapa do laço é verificado se o `id` do `Individuo` na posição `i` do `vetor` é maior que o `id` do `Individuo` da posição seguinte. Em caso afirmativo, a variável `aux` recebe o `Individuo` da posição `i`, a posição `i` recebe o `Individuo` da posição seguinte, a posição seguinte recebe o `Individuo` da variável `aux` e a variável `continuar` recebe o valor de `i`.
+A cada etapa do laço é verificado se o `id` do `Individuo` na posição `i` do `vetor` é maior que o `id` do `Individuo` da posição seguinte. Em caso afirmativo, a variável `auxiliar` recebe o `Individuo` da posição `i`, a posição `i` recebe o `Individuo` da posição seguinte, a posição seguinte recebe o `Individuo` da variável `auxiliar` e a variável `continuar` recebe o valor de `i`.
 
 ```cpp
             if (this->lista[i].get_id() > this->lista[i + 1].get_id())
             {
-                aux = this->lista[i];
+                auxiliar = this->lista[i];
                 this->lista[i] = this->lista[i + 1];
-                this->lista[i + 1] = aux;
+                this->lista[i + 1] = auxiliar;
                 continuar = i;
             }
 ```
@@ -77,7 +77,42 @@ Desta forma, ao fim do laço, o `Individuo` com maior `id` será posto no final 
 
 
 
-### Insertion Sort _(Em Desenvolvimento)_
+### Insertion Sort
+
+O método utiliza uma variável `int`: j, para controlar um laço aninhado e a posição de inserção do elemento analisado, e uma variável `Individuo`: auxiliar, para auxiliar nas trocas necessárias pela ordenação, assim como um laço `for` que percorre o `vetor` a partir do segundo elemento até o fim.
+
+```cpp
+void Lista::insertion_sort()
+{
+    int j;
+    Individuo auxiliar;
+
+    for (int i = 1; i < this->quantidade_max; i++)
+    {
+```
+
+A cada etapa do laço, a variável `auxiliar` recebe o `Individuo` da posição `i` e utiliza-se outro laço `for` aninhado, iniciando na posição `i` e percorrendo o `vetor` até o início ou até que seja encontrado um `Individuo` com `id` menor que o `id` do `Individuo` armazenado na variável `auxiliar`.
+
+```cpp
+        auxiliar = this->lista[i];
+
+        for (j = i; j > 0 && auxiliar.get_id() < this->lista[j - 1].get_id(); j--)
+        {
+```
+
+A cada etapa do laço aninhado, o elemento da posição `j` do `vetor` recebe o elemento anterior. Por fim, a última posição `j` recebe o `Individuo` armazenado na variável `auxiliar`, desta forma, o `Individuo` que originalmente estava na posição `i` estará na posição correta em relação aos elementos anteriores.
+
+```cpp
+            this->lista[j] = this->lista[j - 1];
+        }
+        this->lista[j] = auxiliar;
+    }
+}
+```
+
+> Melhor Caso: O<sub>(n)</sub>
+>
+> Pior Caso: O<sub>(n²)</sub>
 
 
 
