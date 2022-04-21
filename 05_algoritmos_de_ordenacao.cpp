@@ -56,7 +56,8 @@ int main()
 
     cout << "Digite 1 para fazer a ordenação bubble sort!\n";
     cout << "Digite 2 para fazer a ordenação insertion sort!\n";
-    cout << "Digite qualquer outro número inteiro para fazer a ordenação selection sort!\n";
+    cout << "Digite 3 para fazer a ordenação selection sort!\n";
+    cout << "Digite qualquer outro número inteiro para fazer a ordenação merge sort!\n";
     cin >> ord;
 
     cout << "Lista antes da ordenação:\n";
@@ -70,9 +71,13 @@ int main()
     {
         lista_individuos.insertion_sort();
     }
-    else
+    else if (ord == 3)
     {
         lista_individuos.selection_sort();
+    }
+    else
+    {
+        lista_individuos.merge_sort();
     }
 
     cout << "Lista após ordenação:\n";

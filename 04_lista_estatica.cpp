@@ -1,6 +1,7 @@
 #include "03_lista_estatica.h"
 
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 
@@ -168,4 +169,76 @@ void Lista::selection_sort()
             this->lista[menor_id] = auxiliar;
         }
     }
+}
+void Lista::merge_sort()
+{
+    this->merge_recursion(this->lista, 0, this->quantidade_max - 1);
+}
+
+void Lista::merge_recursion(Individuo *lista, int inicio, int fim)
+{
+    int meio;
+
+    if (inicio < fim)
+    {
+        meio = floor((inicio + fim) / 2);
+
+        this->merge_recursion(lista, inicio, meio);
+        this->merge_recursion(lista, meio + 1, fim);
+
+        this->merge(lista, inicio, meio, fim);
+    }
+}
+void Lista::merge(Individuo *lista, int inicio, int meio, int fim)
+{
+    int primeira_metade = inicio;
+    int segunda_metade = meio + 1;
+    int quantidade = fim - inicio + 1;
+    bool fim_primeira_metade = false, fim_segunda_metade = false;
+    Individuo *temporario = new Individuo[quantidade];
+
+    if (temporario != NULL)
+    {
+        for (int i = 0; i < quantidade; i++)
+        {
+            if (!fim_primeira_metade && !fim_segunda_metade)
+            {
+                if (lista[primeira_metade].get_id() < lista[segunda_metade].get_id())
+                {
+                    temporario[i] = lista[primeira_metade++];
+                }
+                else
+                {
+                    temporario[i] = lista[segunda_metade++];
+                }
+                
+                if (primeira_metade > meio)
+                {
+                    fim_primeira_metade = true;
+                }
+
+                if (segunda_metade > fim)
+                {
+                    fim_segunda_metade = true;
+                }
+            }
+            else
+            {
+                if (!fim_primeira_metade)
+                {
+                    temporario[i] = lista[primeira_metade++];
+                }
+                else
+                {
+                    temporario[i] = lista[segunda_metade++];
+                }
+            }
+        }
+        
+        for (int j = 0, k = inicio; j < quantidade; j++, k++)
+        {
+            lista[k] = temporario[j];
+        }
+    }
+    delete [] temporario;
 }

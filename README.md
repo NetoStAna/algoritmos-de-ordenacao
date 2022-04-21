@@ -168,6 +168,138 @@ Por fim, é verificada a diferença entre o valor da variável `i` e o valor da 
 
 
 
+### Merge Sort
+
+O método utiliza a função `merge_recursion` aplicada sobre a variável `lista`, iniciando em `0` e finalizando em `quantidade_max - 1`.
+
+```cpp
+void Lista::merge_sort()
+{
+    this->merge_recursion(this->lista, 0, this->quantidade_max - 1);
+}
+```
+
+
+
+#### Merge Recursion
+
+A função recebe uma variável `Individuo *`: lista, uma variável `int`: inicio e uma variável `int`: fim como parâmetros e utiliza uma variável `int`: meio, para dividir o `vetor`.
+
+```cpp
+void Lista::merge_recursion(Individuo *lista, int inicio, int fim)
+{
+    int meio;
+```
+
+Em seguida, são comparados os valores das variável `inicio` e `fim`, caso o primeiro seja menor que o segundo, a variável `meio` recebe o valor da média entre as duas variáveis, a função `merge_recursion` é usada na primeira e na segunda metade do `vetor` e a função `merge` é aplicada sobre as variáveis `lista`, `inicio`, `meio` e `fim`.
+
+```cpp
+
+    if (inicio < fim)
+    {
+        meio = floor((inicio + fim) / 2);
+
+        this->merge_recursion(lista, inicio, meio);
+        this->merge_recursion(lista, meio + 1, fim);
+
+        this->merge(lista, inicio, meio, fim);
+    }
+}
+```
+
+
+
+#### Merge
+
+A função recebe uma variável `Individuo *:` lista e as variáveis `int`: inicio, meio e fim, como parâmetros e utiliza as variáveis `int`: primeira_metade, inicializada com o valor da variável `inicio`, `int`: segunda_metade, inicializada com o valor da variável `meio` mais `1`, `int`: quantidade, inicializada com o valor da variável `fim` menos o valor da variável `inicio` mais `1`, `bool`: fim_primeira_metade e fim_segunda_metade, inicializadas em `false` e aloca-se um `vetor` de objetos do tipo `Individuo`: temporario, com a quantidade definida na variável `quantidade`, para auxiliar na transferência dos elementos durante a ordenação.
+
+```cpp
+void Lista::merge(Individuo *lista, int inicio, int meio, int fim)
+{
+    int primeira_metade = inicio;
+    int segunda_metade = meio + 1;
+    int quantidade = fim - inicio + 1;
+    bool fim_primeira_metade = false, fim_segunda_metade = false;
+    Individuo *temporario = new Individuo[quantidade];
+```
+
+Em seguida, verifica-se se o a variável `temporario` está vazia, caso contrário, inicia-se um laço `for` que percorre todo o `vetor`.
+
+```cpp
+
+    if (temporario != NULL)
+    {
+        for (int i = 0; i < quantidade; i++)
+        {
+```
+
+A cada etapa do laço, é verificado se uma das variáveis `fim_primeira_metade` e `fim_segunda_metade` se tornaram verdadeiras, em caso negativo, o `id` do `Individuo` da posição da `primeira_metade` é comparado ao `id` do `Individuo` da posição da `segunda_metade`, o menor destes dois é colocado na posição `i` do `vetor` e sua variável correspondente é incrementada em uma unidade.
+
+```cpp
+            if (!fim_primeira_metade && !fim_segunda_metade)
+            {
+                if (lista[primeira_metade].get_id() < lista[segunda_metade].get_id())
+                {
+                    temporario[i] = lista[primeira_metade++];
+                }
+                else
+                {
+                    temporario[i] = lista[segunda_metade++];
+                }
+```
+
+Em seguida, verifica-se se a primeira ou a segunda metade chegaram ao fim e atualiza-se a variável correspondente.
+
+```cpp
+                
+                if (primeira_metade > meio)
+                {
+                    fim_primeira_metade = true;
+                }
+
+                if (segunda_metade > fim)
+                {
+                    fim_segunda_metade = true;
+                }
+```
+
+Caso uma das duas metades já tenha chegado ao fim, verifica-se qual destas está finalizada e insere-se o restante dos demais elementos no `vetor`.
+
+```cpp
+            }
+            else
+            {
+                if (!fim_primeira_metade)
+                {
+                    temporario[i] = lista[primeira_metade++];
+                }
+                else
+                {
+                    temporario[i] = lista[segunda_metade++];
+                }
+```
+
+Por fim, o a variável `temporario` contará com um `vetor` ordenado e será transferida para a variável `lista` recebida como parâmetro, através de um laço `for` que percorre ambos os `vetores`. Em seguida, a variável `temporario` é liberada da memória, finalizando a função.
+
+```cpp
+            }
+        }
+        
+        for (int j = 0, k = inicio; j < quantidade; j++, k++)
+        {
+            lista[k] = temporario[j];
+        }
+    }
+    delete [] temporario;
+}
+```
+
+> Melhor Caso: O<sub>(n * log<sub>n</sub>)</sub>
+>
+> Pior Caso: O<sub>(n * log<sub>n</sub>)</sub>
+
+
+
 ## Referência
 
 Os algoritmos apresentados nesse repositório partem de estudos iniciados no curso de [ordenação](https://www.youtube.com/playlist?list=PL8iN9FQ7_jt6VF821P5sPbg4plqpWKn0x) do Dr. André Backes no canal [Programação Descomplicada Linguagem C](https://www.youtube.com/user/progdescomplicada) no YouTube.
