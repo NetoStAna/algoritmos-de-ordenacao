@@ -300,6 +300,108 @@ Por fim, o a variável `temporario` contará com um `vetor` ordenado e será tra
 
 
 
+### Quick Sort
+
+O método utiliza a função `quick_recursion` aplicada sobre a variável `lista`, iniciando em `0` e finalizando em `quantidade_max - 1`.
+
+```cpp
+void Lista::quick_sort()
+{
+    this->quick_recursion(this->lista, 0, this->quantidade_max - 1);
+}
+```
+
+
+
+#### Quick Recursion
+
+A função recebe uma variável `Individuo *`: lista, uma variável `int`: inicio e uma variável `int`: fim como parâmetros e utiliza uma variável `int`: pivo, para definir o ponto de início da ordenação.
+
+```cpp
+void Lista::quick_recursion(Individuo *lista, int inicio, int fim)
+{
+    int pivo;
+```
+
+Em seguida, são comparados os valores das variável `fim` e `inicio`, caso o primeiro seja maior que o segundo, a variável `pivo` recebe o valor retornado da função `particionar` aplicada às variáveis recebidas como parâmetro e a função `quick_recursion` é aplicada sobre as duas partes do `vetor` que são divididas pelo valor da variável `pivo`.
+
+```cpp
+
+    if (fim > inicio)
+    {
+        pivo = this->particionar(lista, inicio, fim);
+
+        this->quick_recursion(lista, inicio, pivo - 1);
+        this->quick_recursion(lista, pivo + 1, fim);
+    }
+}
+```
+
+
+
+#### Particionar
+
+A função recebe uma variável `Individuo *`: lista, uma variável `int`: inicio e uma variável `int`: fim como parâmetros e utiliza as variáveis `int`: esquerda, inicializada com o valor da variável `inicio`, `int`: direita, inicializada com o valor da variável `fim`, `Individuo`: auxiliar, utilizado para auxiliar nas trocas necessárias para a ordenação e `Individuo`: pivo, inicializada com o `Individuo` armazenado na posição correspondente à variável `inicio` do `vetor` da variável `lista`. Em seguido é utilizado um loop `while`, que segue enquanto o valor da variável `esquerda` for menor que o valor da variável `direita`.
+
+```cpp
+int Lista::particionar(Individuo *lista, int inicio, int fim)
+{
+    int esquerda = inicio;
+    int direita = fim;
+    Individuo auxiliar, pivo = lista[inicio];
+
+    while (esquerda < direita)
+    {
+```
+
+A cada etapa do loop a variável `esquerda` é incrementada em uma unidade, enquanto esta for menor ou igual ao fim e o `id` do `Individuo` na posição correspondente for menor ou igual que o `id` do `pivo`.
+
+```cpp
+        while (esquerda <= fim && lista[esquerda].get_id() <= pivo.get_id())
+        {
+            esquerda++;
+        }
+```
+
+Da mesma forma, a variável `direita` é decrementada em uma unidade, enquanto esta for maior ou igual a `0` e o `id` do `Individuo` da posição correspondente for maior que o `id` do `pivo`.
+
+```cpp
+        
+        while (direita >= 0 && lista[direita].get_id() > pivo.get_id())
+        {
+            direita--;
+        }
+```
+
+Após encerrados os dois loops das variável `esquerda` e `direita`, os valores destas são comparados, se a primeira for maior que a segunda, a variável `auxiliar` recebe o `Individuo` armazenado na posição `esquerda`, a posição correspondente à variável `esquerda` recebe o `Individuo` armazenado na posição `direita` e a posição correspondente à variável `direita` recebe a variável `auxiliar`.
+
+```cpp
+        
+        if (esquerda < direita)
+        {
+            auxiliar = lista[esquerda];
+            lista[esquerda] = lista[direita];
+            lista[direita] = auxiliar;
+        }
+```
+
+Ao final do loop principal, a posição correspondente à variável `inicio` recebe o `Individuo` armazenado na posição `direita` e a posição correspondente à variável `direita` recebe o `Individuo` armazenado no `pivo`. O método então é encerrado, retornando o valor da variável `direita`.
+
+```cpp
+    }
+    lista[inicio] = lista[direita];
+    lista[direita] = pivo;
+
+    return direita;
+}
+```
+
+> Melhor Caso: O<sub>(n * log<sub>n</sub>)</sub>
+>
+> Pior Caso: O(n²)
+
+
+
 ## Referência
 
 Os algoritmos apresentados nesse repositório partem de estudos iniciados no curso de [ordenação](https://www.youtube.com/playlist?list=PL8iN9FQ7_jt6VF821P5sPbg4plqpWKn0x) do Dr. André Backes no canal [Programação Descomplicada Linguagem C](https://www.youtube.com/user/progdescomplicada) no YouTube.

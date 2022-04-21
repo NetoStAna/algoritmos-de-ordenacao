@@ -1,6 +1,7 @@
 #include "03_lista_estatica.h"
 
 #include <iostream>
+#include <cstddef>
 #include <math.h>
 
 using namespace std;
@@ -174,6 +175,10 @@ void Lista::merge_sort()
 {
     this->merge_recursion(this->lista, 0, this->quantidade_max - 1);
 }
+void Lista::quick_sort()
+{
+    this->quick_recursion(this->lista, 0, this->quantidade_max - 1);
+}
 
 void Lista::merge_recursion(Individuo *lista, int inicio, int fim)
 {
@@ -241,4 +246,47 @@ void Lista::merge(Individuo *lista, int inicio, int meio, int fim)
         }
     }
     delete [] temporario;
+}
+
+void Lista::quick_recursion(Individuo *lista, int inicio, int fim)
+{
+    int pivo;
+
+    if (fim > inicio)
+    {
+        pivo = this->particionar(lista, inicio, fim);
+
+        this->quick_recursion(lista, inicio, pivo - 1);
+        this->quick_recursion(lista, pivo + 1, fim);
+    }
+}
+int Lista::particionar(Individuo *lista, int inicio, int fim)
+{
+    int esquerda = inicio;
+    int direita = fim;
+    Individuo auxiliar, pivo = lista[inicio];
+
+    while (esquerda < direita)
+    {
+        while (esquerda <= fim && lista[esquerda].get_id() <= pivo.get_id())
+        {
+            esquerda++;
+        }
+        
+        while (direita >= 0 && lista[direita].get_id() > pivo.get_id())
+        {
+            direita--;
+        }
+        
+        if (esquerda < direita)
+        {
+            auxiliar = lista[esquerda];
+            lista[esquerda] = lista[direita];
+            lista[direita] = auxiliar;
+        }
+    }
+    lista[inicio] = lista[direita];
+    lista[direita] = pivo;
+
+    return direita;
 }

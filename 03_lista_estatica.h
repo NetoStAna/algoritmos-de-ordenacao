@@ -10,6 +10,9 @@ private:
     
     void merge_recursion(Individuo *lista, int inicio, int fim);
     void merge(Individuo *lista, int inicio, int meio, int fim);
+
+    void quick_recursion(Individuo *lista, int inicio, int fim);
+    int particionar(Individuo *lista, int inicio, int fim);
 public:
     Lista(int quantidade_max);
     ~Lista();
@@ -28,4 +31,5 @@ public:
     void insertion_sort();
     void selection_sort();
     void merge_sort();
+    void quick_sort();
 };
