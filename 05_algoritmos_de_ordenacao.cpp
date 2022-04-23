@@ -10,7 +10,7 @@ int main()
     float peso, altura;
     string nome;
 
-    cout << "Algoritmo de ordenação bubble sort!\n";
+    cout << "Algoritmos de ordenação!\n";
 
     cout << "Digite a quantidade máxima de indivíduos a serem inseridos na lista!\n";
     cin >> quantidade_max;

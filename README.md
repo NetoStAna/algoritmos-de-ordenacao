@@ -398,7 +398,7 @@ Ao final do loop principal, a posição correspondente à variável `inicio` rec
 
 > Melhor Caso: O<sub>(n * log<sub>n</sub>)</sub>
 >
-> Pior Caso: O(n²)
+> Pior Caso: O<sub>(n²)</sub>
 
 
 
